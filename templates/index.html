@@ -4,18 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book List</title>
+    <title>Ryan's Reading List</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
     <div class="container">
         <h1 class="my-4">Book List</h1>
+        <!-- Change the "Search Books" link to a button -->
         <a href="{{ url_for('search') }}" class="btn btn-secondary mb-3">Search Books</a>
         <form method="POST" action="{{ url_for('add_searched_book') }}">
-            <input type="text" name="title" placeholder="Title" required>
-            ...
-            <button type="submit">Add Book</button>
+            <!-- Add the Bootstrap class "form-control" to the title input field -->
+            <input type="text" name="title" placeholder="Title" required class="form-control">
+            <!-- Rest of your form elements -->
             <div class="form-group">
                 <label for="authors">Authors:</label>
                 <input type="text" class="form-control" id="authors" name="authors" required>
@@ -40,12 +41,7 @@
                     Rating: {{ book.rating }}<br>
                     Review: <small>{{ book.review }}</small>
                     <div>
-                        <form method="POST" action="{{ url_for('update_book', book_id=book.id) }}" class="d-inline">
-                            <!-- Add hidden input fields for the book details -->
-                            <input type="hidden" name="title" value="{{ book.title }}">
-                            <input type="hidden" name="authors" value="{{ book.authors }}">
-                            <input type="hidden" name="rating" value="{{ book.rating }}">
-                            <input type="hidden" name="review" value="{{ book.review }}">
+                        <form method="GET" action="{{ url_for('update_page', book_id=book.id) }}" class="d-inline">
                             <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
                         </form>
                         <a href="{{ url_for('delete_book', book_id=book.id) }}"

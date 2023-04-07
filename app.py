@@ -1,4 +1,3 @@
-# What's wrong with my code? I'm getting an error when I try to add a book to the reading list. The error is RunTime Error: The session is unavailable because no secret key was set. Set the secret_key on the application to something unique and secret.
 import os
 from flask import render_template, request, redirect, url_for, flash
 import requests
@@ -64,30 +63,37 @@ def add_book():
 
 @app.route('/add_searched_book', methods=['POST'])
 def add_searched_book():
-    print(request.form)
-    book_id = request.form.get('book_id')
     title = request.form['title']
     authors = request.form['authors']
-    rating = request.form['rating']
-    review = request.form['review']
-    # Fetch book details and save it to your database or storage
-    # ...
-    return redirect(url_for('reading_list'))
+    # Use a default value if not provided
+    rating = request.form.get('rating', 0)
+    # Use a default value if not provided
+    review = request.form.get('review', '')
+
+    new_book = Book(title=title, authors=authors, rating=rating, review=review)
+    db.session.add(new_book)
+    db.session.commit()
+
+    flash('Book added to the reading list.', 'success')
+    return redirect(url_for('index'))
 
 
 @app.route('/update/<int:book_id>', methods=['POST'])
 def update_book(book_id):
     book = Book.query.get_or_404(book_id)
 
-    book.title = request.form['title']
-    book.authors = request.form['authors']
     book.rating = request.form['rating']
     book.review = request.form['review']
-
     db.session.commit()
 
     flash('Book updated successfully.', 'success')
     return redirect(url_for('index'))
+
+
+@app.route('/update_page/<int:book_id>', methods=['GET'])
+def update_page(book_id):
+    book = Book.query.get_or_404(book_id)
+    return render_template('update.html', book=book)
 
 
 @app.route('/delete/<int:book_id>')
