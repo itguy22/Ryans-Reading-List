@@ -12,7 +12,8 @@
     <div class="container">
         <h1 class="my-4">Book List</h1>
         <!-- Change the "Search Books" link to a button -->
-        <a href="{{ url_for('search') }}" class="btn btn-secondary mb-3">Search Books</a>
+        <!-- Change the "Search Books" link to a green button -->
+        <a href="{{ url_for('search') }}" class="btn btn-success mb-3">Search Books</a>
         <form method="POST" action="{{ url_for('add_searched_book') }}">
             <!-- Add the Bootstrap class "form-control" to the title input field -->
             <input type="text" name="title" placeholder="Title" required class="form-control">
