@@ -1,3 +1,5 @@
+# Add thumbnails for books to list
+
 import os
 from flask import render_template, request, redirect, url_for, flash
 import requests
@@ -10,8 +12,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 app.secret_key = os.urandom(24)
-
-# Move imports that use `db` below the `db` definition
 
 
 class Book(db.Model):
@@ -109,7 +109,7 @@ def delete_book(book_id):
 
 def search_books(query):
     # Replace with your actual Google Books API key
-    api_key = "AIzaSyDu0fKNRA-mMeZ2OBZH3n-JjiYPQTQKnUA"
+    api_key = ""
     url = f"https://www.googleapis.com/books/v1/volumes?q={query}&key={api_key}"
     response = requests.get(url)
     data = response.json()
