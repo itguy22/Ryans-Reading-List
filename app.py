@@ -1,17 +1,21 @@
-# Add thumbnails for books to list
-
+from dotenv import load_dotenv
 import os
 from flask import render_template, request, redirect, url_for, flash
 import requests
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+# Load the .env file
+load_dotenv()
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:5MY9ppxA3J47NB@localhost/reading_list'
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{os.getenv('PGUSER')}:{os.getenv('PGPASSWORD')}@db/{os.getenv('POSTGRES_DB')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 app.secret_key = os.urandom(24)
+
+# Move imports that use `db` below the `db` definition
 
 
 class Book(db.Model):
@@ -108,8 +112,8 @@ def delete_book(book_id):
 
 
 def search_books(query):
-    # Replace with your actual Google Books API key
-    api_key = ""
+    # Google API key moved to environment variable.
+    api_key = os.getenv('GOOGLE_API_KEY')
     url = f"https://www.googleapis.com/books/v1/volumes?q={query}&key={api_key}"
     response = requests.get(url)
     data = response.json()
@@ -134,6 +138,10 @@ def search():
         return render_template('search.html', books=books)
     return render_template('search.html')
 
+# Add this below all route decorators to create the database tables.
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    app.run(host='0.0.0.0', port=5001, debug=True)
