@@ -27,7 +27,6 @@
                     <h5 class="mt-0 mb-1">{{ book.title }}</h5>
                     Author(s): {{ ', '.join(book.authors) }}
                     <!-- Add the form for adding a book to the reading list here -->
-                    <!-- Add the form for adding a book to the reading list here -->
                     <form method="POST" action="{{ url_for('add_searched_book') }}" class="mt-2">
                         <input type="hidden" name="title" value="{{ book.title }}">
                         <input type="hidden" name="authors" value="{{ ', '.join(book.authors) }}">
