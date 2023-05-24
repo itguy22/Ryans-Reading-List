@@ -16,8 +16,8 @@ a-->
 <body>
     <div class="container">
         <h1 class="my-4">Book List</h1>
-        <!-- Change the "Search Books" link to a button -->
-        <!-- Change the "Search Books" link to a green button -->
+        <a href="{{ url_for('index', order='rating', direction='asc') }}" class="btn btn-primary">Sort by Rating Ascending</a>
+        <a href="{{ url_for('index', order='rating', direction='desc') }}" class="btn btn-primary">Sort by Rating Descending</a>
         <a href="{{ url_for('search') }}" class="btn btn-success mb-3">Search Books</a>
         <form method="POST" action="{{ url_for('add_searched_book') }}">
             <!-- Add the Bootstrap class "form-control" to the title input field -->

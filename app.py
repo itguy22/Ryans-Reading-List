@@ -5,7 +5,7 @@ import requests
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-# Load the .env file
+# Load the .env file to get the environment variables. If you do not have a .env file, you can create one and add the environment variables there.
 load_dotenv()
 
 app = Flask(__name__)
@@ -37,17 +37,25 @@ class Book(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        title = request.form['title']
-        rating = request.form['rating']
-        review = request.form['review']
-        book = Book(title, rating, review)
-        db.session.add(book)
-        db.session.commit()
-        return redirect(url_for('index'))
+    books = Book.query.all()  # Retrieve all books from database
+    order = request.args.get('order', default='id')
+    direction = request.args.get('direction', default='asc')
 
-    books = Book.query.all()
-    return render_template('index.html', books=books)
+    if order == 'rating':
+        if direction == 'desc':
+            books = Book.query.order_by(Book.rating.desc()).all()
+        else:
+            books = Book.query.order_by(Book.id).all()
+        if request.method == 'POST':
+            title = request.form['title']
+            rating = request.form['rating']
+            review = request.form['review']
+            book = Book(title, rating, review)
+            db.session.add(book)
+            db.session.commit()
+            return redirect(url_for('index', order=order, direction=direction))
+
+    return render_template('index.html', books=books, order=order, direction=direction)
 
 
 @app.route('/add', methods=['POST'])
