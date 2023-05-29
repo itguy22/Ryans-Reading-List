@@ -5,12 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Books</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark mb-3">
+        <a class="navbar-brand" href="#">Search Books</a>
+    </nav>
+    
     <div class="container">
-        <h1 class="my-4">Search Books</h1>
+        <!-- Search Form -->
         <form method="POST" action="{{ url_for('search') }}">
             <div class="form-group">
                 <label for="query">Search:</label>
@@ -19,27 +25,34 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
         <hr>
-        <ul class="list-unstyled">
-            {% for book in books %}
-            <li class="media my-4">
-                <img src="{{ book.thumbnail }}" class="mr-3" alt="{{ book.title }}" style="max-height: 100px;">
-                <div class="media-body">
-                    <h5 class="mt-0 mb-1">{{ book.title }}</h5>
-                    Author(s): {{ ', '.join(book.authors) }}
-                    <!-- Add the form for adding a book to the reading list here -->
-                    <!-- Add the form for adding a book to the reading list here -->
-                    <form method="POST" action="{{ url_for('add_searched_book') }}" class="mt-2">
-                        <input type="hidden" name="title" value="{{ book.title }}">
-                        <input type="hidden" name="authors" value="{{ ', '.join(book.authors) }}">
-                        <button type="submit" class="btn btn-primary">Add to reading list</button>
-                    </form>
 
+        <!-- Display Search Results -->
+        {% for book in books %}
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="{{ book.thumbnail }}" class="card-img" alt="{{ book.title }}" style="max-height: 100px;">
                 </div>
-            </li>
-            {% endfor %}
-        </ul>
-
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">
+                            <strong>Author(s):</strong> {{ ', '.join(book.authors) }}
+                        </p>
+                        <!-- Add to Reading List Form -->
+                        <form method="POST" action="{{ url_for('add_searched_book') }}">
+                            <input type="hidden" name="title" value="{{ book.title }}">
+                            <input type="hidden" name="authors" value="{{ ', '.join(book.authors) }}">
+                            <button type="submit" class="btn btn-primary">Add to reading list</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-</body>
 
-</html>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07
