@@ -15,8 +15,6 @@ db = SQLAlchemy(app)
 
 app.secret_key = os.urandom(24)
 
-# Move imports that use `db` below the `db` definition
-
 
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)

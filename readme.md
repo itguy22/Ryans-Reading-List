@@ -17,11 +17,14 @@ PostgreSQL
 Installation
 Clone the repository:
 git clone https://github.com/your-username/ryans-reading-list.git
+
 Change to the project directory:
 cd ryans-reading-list
+
 Create a virtual environment and activate it:
 python3 -m venv venv
 source venv/bin/activate
+
 Install the required packages:
 pip install -r requirements.txt
 Set up your PostgreSQL database and update the DATABASE_URL in the config.py file with your database details.
