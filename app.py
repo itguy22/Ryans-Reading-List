@@ -43,7 +43,8 @@ def index():
         if direction == 'desc':
             books = Book.query.order_by(Book.rating.desc()).all()
         else:
-            books = Book.query.order_by(Book.id).all()
+            # Order by rating in ascending order
+            books = Book.query.order_by(Book.rating.asc()).all()
         if request.method == 'POST':
             title = request.form['title']
             rating = request.form['rating']
@@ -75,9 +76,7 @@ def add_book():
 def add_searched_book():
     title = request.form['title']
     authors = request.form['authors']
-    # Use a default value if not provided
     rating = request.form.get('rating', 0)
-    # Use a default value if not provided
     review = request.form.get('review', '')
 
     new_book = Book(title=title, authors=authors, rating=rating, review=review)
