@@ -11,19 +11,19 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-dark bg-dark mb-3">
+    <nav class="navbar navbar-dark bg-dark mb-3 px-3">
         <a class="navbar-brand" href="#">Search Books</a>
     </nav>
     
     <div class="container">
         <!-- Search Form -->
         <form method="POST" action="{{ url_for('search') }}">
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label for="query">Search:</label>
                 <input type="text" class="form-control" id="query" name="query" required>
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+        </form>        
         <hr>
 
         <!-- Display Search Results -->
