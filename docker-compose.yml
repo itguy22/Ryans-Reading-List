@@ -4,6 +4,8 @@ services:
     image: postgres:13.2-alpine
     volumes:
       - ./data:/var/lib/postgresql/data
+      - .:/app
+      - ./migrations:/app/migrations  # Fixed this line
     environment:
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
@@ -15,5 +17,4 @@ services:
     depends_on:
       - db
     env_file:
-    - .env 
-
+    - .env

@@ -4,6 +4,7 @@ from flask import render_template, request, redirect, url_for, flash
 import requests
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 # Load the .env file to get the environment variables. If you do not have a .env file, you can create one and add the environment variables there.
 load_dotenv()
@@ -22,15 +23,20 @@ class Book(db.Model):
     authors = db.Column(db.String(200), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.Text, nullable=True)
+    thumbnail = db.Column(db.String(500), nullable=True)
 
     def __repr__(self):
         return f'<Book {self.title}>'
 
-    def __init__(self, title, authors, rating, review):
+    def __init__(self, title, authors, rating, review, thumbnail):
         self.title = title
         self.rating = rating
         self.review = review
         self.authors = authors
+        self.thumbnail = thumbnail
+
+
+migrate = Migrate(app, db)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -63,7 +69,7 @@ def add_book():
     authors = request.form['authors']
     rating = request.form['rating']
     review = request.form['review']
-
+    thumbnail = request.form['thumbnail']
     new_book = Book(title=title, authors=authors, rating=rating, review=review)
     db.session.add(new_book)
     db.session.commit()
@@ -78,8 +84,11 @@ def add_searched_book():
     authors = request.form['authors']
     rating = request.form.get('rating', 0)
     review = request.form.get('review', '')
+    # Get the thumbnail URL from the form
+    thumbnail = request.form.get('thumbnail', '')
 
-    new_book = Book(title=title, authors=authors, rating=rating, review=review)
+    new_book = Book(title=title, authors=authors, rating=rating,
+                    review=review, thumbnail=thumbnail)  # Add the thumbnail to the Book
     db.session.add(new_book)
     db.session.commit()
 

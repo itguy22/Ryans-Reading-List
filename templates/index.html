@@ -43,9 +43,14 @@
         </form>
         <hr>
 
-        <!-- Display Books -->
-        {% for book in books %}
-        <div class="card mb-3">
+<!-- Display Books -->
+{% for book in books %}
+<div class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="{{ book.thumbnail }}" class="card-img img-fluid" alt="{{ book.title }}">
+        </div>
+        <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">{{ book.title }}</h5>
                 <p class="card-text">
@@ -57,7 +62,9 @@
                 <a href="{{ url_for('delete_book', book_id=book.id) }}" class="btn btn-danger">Delete</a>
             </div>
         </div>
-        {% endfor %}
+    </div>
+</div>
+{% endfor %}
     </div>
 
     <!-- Bootstrap JS -->
