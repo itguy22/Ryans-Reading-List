@@ -61,3 +61,7 @@ li {
     font-size: 0.9em;
     margin-top: 5px;
 }
+
+.book-thumbnail {
+    width: 100px;
+}
