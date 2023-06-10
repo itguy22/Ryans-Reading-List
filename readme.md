@@ -1,5 +1,5 @@
 Ryan's Reading List App
-This is a simple web application built using Flask, PostgreSQL, and Google Books API. It allows users to maintain a list of books they've read, search for books, add them to their reading list, update details of the books, and delete books from the list.
+This is a full-stack web application built using Flask, PostgreSQL, and Google Books API. It allows users to maintain a list of books they've read, search for books, add them to their reading list, update details of the books, and delete books from the list.
 
 Features
 List of books a user has read, displaying title, author, rating, review, and thumbnail image.
