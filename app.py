@@ -82,30 +82,35 @@ def add_book():
 def add_searched_book():
     title = request.form['title']
     authors = request.form['authors']
-    rating = request.form.get('rating', 0)
-    review = request.form.get('review', '')
-    # Get the thumbnail URL from the form
     thumbnail = request.form.get('thumbnail', '')
 
+    # Set default value of rating and review as they are not part of the search form
+    rating = 0
+    review = ''
+
     new_book = Book(title=title, authors=authors, rating=rating,
-                    review=review, thumbnail=thumbnail)  # Add the thumbnail to the Book
+                    review=review, thumbnail=thumbnail)
     db.session.add(new_book)
     db.session.commit()
 
-    flash('Book added to the reading list.', 'success')
-    return redirect(url_for('index'))
+    flash('Book added to the reading list. You can now add a rating and a review.', 'success')
+
+    return redirect(url_for('update_book', book_id=new_book.id))
 
 
-@app.route('/update/<int:book_id>', methods=['POST'])
+@app.route('/update/<int:book_id>', methods=['GET', 'POST'])
 def update_book(book_id):
     book = Book.query.get_or_404(book_id)
 
-    book.rating = request.form['rating']
-    book.review = request.form['review']
-    db.session.commit()
+    if request.method == 'POST':
+        book.rating = request.form['rating']
+        book.review = request.form['review']
+        db.session.commit()
 
-    flash('Book updated successfully.', 'success')
-    return redirect(url_for('index'))
+        flash('Book updated successfully.', 'success')
+        return redirect(url_for('index'))
+    else:
+        return render_template('update.html', book=book)
 
 
 @app.route('/update_page/<int:book_id>', methods=['GET'])
