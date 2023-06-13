@@ -1,5 +1,7 @@
 Ryan's Reading List App
 
+![readinglist_1](https://github.com/itguy22/Ryans-Reading-List/assets/125841661/21ff26e0-8f03-4a72-9c10-8e98cfc95831)
+
 This is a full stack web application built using Flask, PostgreSQL, and Google Books API. It allows users to maintain a list of books they've read, search for books, add them to their reading list, update details of the books, and delete books from the list.
 
 Features
@@ -57,7 +59,7 @@ Visit the application at http://localhost:5001.
 Click the "Search Books" button to search for books using the Google Books API.
 Click "Add to reading list" to add a book to your reading list.
 On the main page, you can view your reading list, update the rating and review of a book, or delete a book from the list.
-![readinglist_1](https://github.com/itguy22/Ryans-Reading-List/assets/125841661/21ff26e0-8f03-4a72-9c10-8e98cfc95831)
+
 
 
   
